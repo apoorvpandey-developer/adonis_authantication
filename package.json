@@ -5,9 +5,9 @@
   "type": "module",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "node ace serve --watch",
-    "build": "node ace build",
-    "start": "node build/bin/server.js",
+    "dev": "node ace serve --watch",        
+    "build": "node ace build",              
+    "start": "node build/bin/server.js",    
     "test": "node ace test",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -47,7 +47,6 @@
     "hot-hook": "^0.4.0",
     "pino-pretty": "^13.0.0",
     "prettier": "^3.5.3",
-    "ts-node-maintained": "^10.9.6",
     "typescript": "~5.8"
   },
   "dependencies": {
@@ -59,6 +58,9 @@
     "luxon": "^3.7.1",
     "mysql2": "^3.14.3",
     "reflect-metadata": "^0.2.2"
+  },
+  "engines": {
+    "node": ">=18.x"
   },
   "hotHook": {
     "boundaries": [
