@@ -1,25 +1,16 @@
-// ace.js at project root
-const run = async () => {
-  const isBuildCmd = process.argv.includes('build')
-  if (!isBuildCmd) {
-    try {
-      await import('ts-node-maintained/register')
-    } catch {
-      // ignore if not present; in production we don't need it
-    }
+/**
+ * Register hook to process TypeScript files using ts-node
+ * (only needed in development, not in production build)
+ */
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    await import('ts-node-maintained/register/esm')
+  } catch {
+    // ignore if not installed (e.g. in production)
   }
-
-  const { IgnitorFactory } = await import('@adonisjs/core/factories')
-  await new IgnitorFactory()
-    .appRoot(process.cwd())
-    .createAceKernel()
-    .handle(process.argv.slice(2))
 }
-
-run()
-
 
 /**
  * Import ace console entrypoint
  */
-// await import('./bin/console.js')
+await import('./bin/console.js')
