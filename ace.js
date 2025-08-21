@@ -1,25 +1,23 @@
-/*
-|--------------------------------------------------------------------------
-| JavaScript entrypoint for running ace commands
-|--------------------------------------------------------------------------
-|
-| DO NOT MODIFY THIS FILE AS IT WILL BE OVERRIDDEN DURING THE BUILD
-| PROCESS.
-|
-| See docs.adonisjs.com/guides/typescript-build-process#creating-production-build
-|
-| Since, we cannot run TypeScript source code using "node" binary, we need
-| a JavaScript entrypoint to run ace commands.
-|
-| This file registers the "ts-node/esm" hook with the Node.js module system
-| and then imports the "bin/console.ts" file.
-|
-*/
+// ace.js at project root
+const run = async () => {
+  const isBuildCmd = process.argv.includes('build')
+  if (!isBuildCmd) {
+    try {
+      await import('ts-node-maintained/register')
+    } catch {
+      // ignore if not present; in production we don't need it
+    }
+  }
 
-/**
- * Register hook to process TypeScript files using ts-node
- */
-import 'ts-node-maintained/register/esm'
+  const { IgnitorFactory } = await import('@adonisjs/core/factories')
+  await new IgnitorFactory()
+    .appRoot(process.cwd())
+    .createAceKernel()
+    .handle(process.argv.slice(2))
+}
+
+run()
+
 
 /**
  * Import ace console entrypoint
