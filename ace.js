@@ -6,11 +6,17 @@ if (process.env.NODE_ENV !== 'production') {
   try {
     await import('ts-node-maintained/register/esm')
   } catch {
-    // ignore if not installed (e.g. in production)
+    // ignore if not installed
   }
 }
 
 /**
  * Import ace console entrypoint
+ * - Use TS file in dev
+ * - Use compiled JS in production
  */
-await import('./bin/console.js')
+if (process.env.NODE_ENV === 'production') {
+  await import('./build/bin/console.js')
+} else {
+  await import('./bin/console.js')
+}
